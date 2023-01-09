@@ -13,6 +13,21 @@ function getYoutubeUrlId(url)
     return videoId;
 }
 
+function getSpotifySongId(url) {
+    var spRegEx = /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:track\/|\?uri=spotify:track:)((\w|-){22})/;
+    // returns only the ID
+    return url.match(spRegEx);
+}
+
+function getSpotifySongData(id) {
+    $.ajax({
+        url: 'https://api.spotify.com/v1/tracks/' + id,
+        success: function (response) {
+            callback(response);
+        }
+    });
+}
+
 function isReady(divId, howler){
     if(howler){
         for (var soundName in soundList)
